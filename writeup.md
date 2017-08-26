@@ -1,4 +1,4 @@
-Writeup:
+# **Traffic Sign Recognition** 
 
 [//]: # (Image References)
 
@@ -10,10 +10,19 @@ Writeup:
 [image6]: ./examples/img3result.png "Image 3 Result"
 [image7]: ./examples/img4result.png "Image 4 Result"
 [image8]: ./examples/img5result.png "Image 5 Result"
+[image13]: ./examples/img6result.png "Image 6 Result"
+[image14]: ./examples/img7result.png "Image 7 Result"
+[image15]: ./examples/img8result.png "Image 8 Result"
+[image16]: ./examples/img9result.png "Image 9 Result"
+[image17]: ./examples/img10result.png "Image 10 Result"
 [image9]: ./examples/trainingsets.png "Traing Sets"
 [image10]: ./examples/testimages.png "Test Images"
 [image11]: ./examples/testimagesprocessed.png "Test Images Processed"
 [image12]: ./examples/initialtraintestchart.png "Distribution of classes in training and test sets"
+[image18]: ./examples/testimages2a.png "Test Images"
+[image19]: ./examples/testimages2b.png "Test Images"
+[image20]: ./examples/testimages2c.png "Test Images"
+
 
 
 
@@ -128,72 +137,78 @@ For my optimizer I stuck with the cs231n's recommended adam optimizer (http://cs
 * test set accuracy of 94.2%
 
 
+### Test a Model on New Images
 
-### My trained model correctly identified all 5 of the images I selected.
+I chose 10 images from around the web. Here are the 10 images.
+![alt text][image18]
+![alt text][image19]
+![alt text][image20]
 
-| Image			    	    |     Prediction	        					| 
-|:-------------------------:|:---------------------------------------------:| 
-| Turn Left Ahead     		| Turn Left Ahead   							| 
-| No Entry     		    	| No Entry 										|
-| Roundabout mandatory	    | Roundabout mandatory							|
-| Road narrows on the right	| Road narrows on the right		 				|
-| Children Crossing			| Children Crossing   							|
+I chose these images because they represented a variety of lighting levels as well as visual clarity.
+The `Speed limit (60km/h) ` and `General Caution` images for example are exceptionally dark and have low contrast. The `Priority road` and `No passing` are both hard to read with my own eyes.
 
-Top 5 Softmax Probabilities for the images:
+### My trained model correctly identified all 10 of the images I selected.
 
-Image 1 (Turn Left Ahead) 20.7%
+| Image			    	    				|     Prediction	        					| 
+|:-----------------------------------------:|:---------------------------------------------:| 
+| Speed limit (60km/h)  					| Speed limit (60km/h)   						| 
+| No passing  		    					| No Passing									|
+| Priority road	    						| Priority road									|
+| Vehicles over 3.5 metric tons prohibited	| Vehicles over 3.5 metric tons prohibited		|
+| General Caution							| Children Crossing   							|
+| Turn Left Ahead  					   		| Turn Left Ahead   							| 
+| No Entry     		   					 	| No Entry 										|
+| Roundabout mandatory	 				    | Roundabout mandatory							|
+| Road narrows on the right					| Road narrows on the right		 				|
+| Children Crossing							| Children Crossing   							|
+
+
+
 ![alt text][image4]
-
-| Probability         	|     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| .20         			| Turn Left Ahead								| 
-| .04     				| Keep Right									|
-| .039					| No Passing									|
-| -.0077      			| Yield							 				|
-| -.0675			    | Ahead only	      							|
-
-Image 2 (No Entry) 21.6%
 ![alt text][image5]
-
-| Probability         	|     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| .21         			| No Entry										| 
-| .069     				| Keep left										|
-| .022					| Stop											|
-| -.01      			| No Passing					 				|
-| -.03				    | Ahead only	      							|
-
-Image 3 (Roundabout mandatory) 12.25%
 ![alt text][image6]
-
-| Probability         	|     Prediction	        						 | 
-|:---------------------:|:--------------------------------------------------:| 
-| .12         			| Roundabout mandatory								 | 
-| .047     				| Right-of-way at the next intersection				 |
-| .043					| Speed limit (100km/h)								 |
-| .017      			| Priority road					 					 |
-| -.007				    | End of no passing by vehicles over 3.5 metric tons |
-
-Image 4 (Road narrows on the right) 36.7%
 ![alt text][image7]
-
-| Probability         	|     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| .367         			| Road narrows on the right						| 
-| .335     				| General Caution								|
-| .196					| Keep left										|
-| .184      			| Pedestrians					 				|
-| .122				    | Road work		      							|
-
-Image 5 (Children Crossing) 18.6%
 ![alt text][image8]
+![alt text][image13]
+![alt text][image14]
+![alt text][image15]
+![alt text][image16]
+![alt text][image17]
 
-| Probability         	|     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| .186         			| Children Crossing								| 
-| -.046    				| End of all speed and passing limits			|
-| -.047					| Bicycles crossing								|
-| -.06      			| Right-of-way at the next intersection			|
-| -.087				    | No passing	      							|
+Given the degree of accuracy that my model was able to predict the new images `100%` versus my with my testing set which was only `94.2%` indicates that my model was well trained. If the level of prediction was much lower than my testing accuracy it would have suggested that I had overfitted to the training data. This suggests that my use of data augmentation was effective in expanding my training data.
 
-None of the images scored above 50%. Image 4 - Road Narrows on the Right - for example had two classes within 4% of each other while still being correct. The alternative prediction was General Caution, which under some conditions could look similar. I think this largely comes down to the limited amount of samples I had to work with.  
+### Top 5 Softmax Probabilities for the images:
+```
+INFO:tensorflow:Restoring parameters from .\traffic_sign
+TopKV2(values=array([[  9.99999523e-01,   4.45272718e-07,   3.33199406e-11,
+          5.40262496e-12,   2.15472497e-12],
+       [  1.00000000e+00,   1.30407906e-19,   1.11445113e-19,
+          8.78004661e-22,   1.26631889e-23],
+       [  1.00000000e+00,   1.03696074e-09,   6.11643791e-11,
+          1.25060474e-11,   1.20529897e-11],
+       [  1.00000000e+00,   3.96371103e-10,   1.50260540e-10,
+          1.13489072e-13,   5.86921835e-16],
+       [  9.95429158e-01,   4.53382405e-03,   3.00612901e-05,
+          4.28498106e-06,   1.28526517e-06],
+       [  1.00000000e+00,   3.48957463e-09,   4.64835948e-11,
+          1.33483600e-12,   1.11309494e-13],
+       [  9.99927044e-01,   7.29266249e-05,   8.08302817e-12,
+          1.24708772e-12,   5.71945811e-13],
+       [  9.99831438e-01,   7.29601306e-05,   4.55668051e-05,
+          4.30406508e-05,   6.18614104e-06],
+       [  9.99993682e-01,   6.10420147e-06,   2.59968800e-07,
+          1.98589167e-09,   4.21203454e-11],
+       [  9.85637128e-01,   1.30415028e-02,   7.88158504e-04,
+          4.04213672e-04,   6.56075063e-05]], dtype=float32), indices=array([[ 3,  5,  2, 23, 13],
+       [ 9,  3, 41, 35, 10],
+       [12,  9, 41, 17, 40],
+       [16,  7,  9, 10,  5],
+       [18, 26, 40, 20, 24],
+       [34, 35, 30, 13, 38],
+       [17, 14, 38, 34, 12],
+       [40,  7, 12, 16, 11],
+       [24, 26, 18, 28, 27],
+       [28, 18, 26, 27, 11]]))
+```
+
+The code for generating this is found in the last cell of the notebook. It shows that for each image it was able to effectively predict the probability of the correct class of each image within 0.98-0.99.
